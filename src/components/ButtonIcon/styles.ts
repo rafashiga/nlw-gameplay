@@ -27,6 +27,6 @@ export const styles = StyleSheet.create({
 		color: theme.colors.heading,
 		textAlign: 'center',
 		fontSize: 15,
-		fontWeight: 'bold',
+		fontFamily: theme.fonts.text500,
 	},
 });
