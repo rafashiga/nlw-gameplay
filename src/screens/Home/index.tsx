@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { View, FlatList, Text } from 'react-native';
 
-import { Profile } from '../../components/Profile';
-import { ButtonAdd } from '../../components/ButtonAdd';
-import { CategorySelect } from '../../components/CategorySelect';
-import { ListHeader } from '../../components/ListHeader';
-import { ListDivider } from '../../components/ListDivider';
-import { Appointment, IAppointment } from '../../components/Appointment';
+import {
+	Profile,
+	ButtonAdd,
+	CategorySelect,
+	ListHeader,
+	ListDivider,
+	Appointment,
+	IAppointment,
+} from '../../components';
 
 import { styles } from './styles';
 
