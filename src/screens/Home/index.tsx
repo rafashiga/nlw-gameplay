@@ -37,7 +37,7 @@ export const Home = () => {
 				id: '1',
 				name: 'Lendários',
 				icon: '',
-				owner: true,
+				owner: false,
 			},
 			category: '1',
 			date: '22/06 às 20:40h',
