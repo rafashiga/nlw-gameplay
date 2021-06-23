@@ -4,6 +4,7 @@ import { View, FlatList, Text } from 'react-native';
 import {
 	Profile,
 	ButtonAdd,
+	Background,
 	CategorySelect,
 	ListHeader,
 	ListDivider,
@@ -51,7 +52,7 @@ export const Home = () => {
 	};
 
 	return (
-		<View>
+		<Background>
 			<View style={styles.header}>
 				<Profile />
 				<ButtonAdd />
@@ -71,6 +72,6 @@ export const Home = () => {
 					showsVerticalScrollIndicator={false}
 				/>
 			</View>
-		</View>
+		</Background>
 	);
 };
