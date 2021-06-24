@@ -33,7 +33,6 @@ export const Home = () => {
 			description:
 				'É hoje que vamos chegar ao challenger sem perder uma partida da md10',
 		},
-
 		{
 			id: '2',
 			guild: {
@@ -71,19 +70,18 @@ export const Home = () => {
 				categorySelected={category}
 				setCategory={handleCategorySelect}
 			/>
-			<View style={styles.content}>
-				<ListHeader title='Partidas agendadas' subtitle='Total 6' />
-				<FlatList
-					data={appoinments}
-					keyExtractor={(item) => item.id}
-					renderItem={({ item }) => (
-						<Appointment data={item} onPress={handleAppointmentDetails} />
-					)}
-					ItemSeparatorComponent={() => <ListDivider />}
-					style={styles.matches}
-					showsVerticalScrollIndicator={false}
-				/>
-			</View>
+			<ListHeader title='Partidas agendadas' subtitle='Total 6' />
+			<FlatList
+				data={appoinments}
+				keyExtractor={(item) => item.id}
+				renderItem={({ item }) => (
+					<Appointment data={item} onPress={handleAppointmentDetails} />
+				)}
+				ItemSeparatorComponent={() => <ListDivider />}
+				contentContainerStyle={{ paddingBottom: 69 }}
+				style={styles.matches}
+				showsVerticalScrollIndicator={false}
+			/>
 		</Background>
 	);
 };
