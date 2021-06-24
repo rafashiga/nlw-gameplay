@@ -15,7 +15,6 @@ export const ListDivider = ({ isCentered }: ListDividerProps) => {
 				isCentered
 					? {
 							marginVertical: 12,
-							width: '74%',
 					  }
 					: {
 							marginTop: 2,
