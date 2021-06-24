@@ -53,8 +53,8 @@ export const AppointmentCreate = () => {
 			behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
 			style={styles.container}
 		>
-			<ScrollView>
-				<Background>
+			<Background>
+				<ScrollView>
 					<Header title='Agendar partida' />
 					<Text
 						style={[
@@ -88,7 +88,9 @@ export const AppointmentCreate = () => {
 						</RectButton>
 						<View style={styles.field}>
 							<View>
-								<Text style={styles.label}>Dia e mês</Text>
+								<Text style={[styles.label, { marginBottom: 12 }]}>
+									Dia e mês
+								</Text>
 
 								<View style={styles.column}>
 									<SmallInput maxLength={2} />
@@ -98,7 +100,9 @@ export const AppointmentCreate = () => {
 							</View>
 
 							<View>
-								<Text style={styles.label}>Hora e minuto</Text>
+								<Text style={[styles.label, { marginBottom: 12 }]}>
+									Hora e minuto
+								</Text>
 
 								<View style={styles.column}>
 									<SmallInput maxLength={2} />
@@ -121,8 +125,8 @@ export const AppointmentCreate = () => {
 							<Button title='Agendar' />
 						</View>
 					</View>
-				</Background>
-			</ScrollView>
+				</ScrollView>
+			</Background>
 
 			<ModalView closeModal={handleCloseGuildsModal} visible={openGuildsModal}>
 				<Guilds handleGuildSelected={handleGuildSelected} />
