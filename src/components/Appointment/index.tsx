@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 
+import { IGuild } from '../Guild';
 import { GuildIcon } from '../GuildIcon';
 import { categories } from '../../utils/categories';
 import PlayerSvg from '../../assets/player.svg';
@@ -12,12 +13,7 @@ import { theme } from '../../global/styles/theme';
 
 export interface IAppointment {
 	id: string;
-	guild: {
-		id: string;
-		name: string;
-		icon: string;
-		owner: boolean;
-	};
+	guild: IGuild;
 	category: string;
 	date: string;
 	description: string;
