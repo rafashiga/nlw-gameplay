@@ -10,6 +10,7 @@ export const styles = StyleSheet.create({
 	},
 	content: {
 		flex: 1,
+		marginLeft: 20,
 	},
 	title: {
 		fontFamily: theme.fonts.title700,
