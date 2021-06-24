@@ -1,19 +1,22 @@
-import React, { useContext } from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { View, Text, Image } from 'react-native';
+import React from 'react';
+import { View, Text, Image, Alert, ActivityIndicator } from 'react-native';
 
 import { useAuth } from '../../hooks/auth';
 import { ButtonIcon, Background } from '../../components';
 
 import IllustrationImg from '../../assets/illustration.png';
+import { theme } from '../../global/styles/theme';
 import { styles } from './styles';
 
 export const SignIn = () => {
-	const { user } = useAuth();
-	const navigation = useNavigation();
+	const { loading, signIn } = useAuth();
 
-	const handleSignIn = () => {
-		navigation.navigate('Home');
+	const handleSignIn = async () => {
+		try {
+			await signIn();
+		} catch (error) {
+			Alert.alert(error.message);
+		}
 	};
 
 	return (
@@ -31,7 +34,11 @@ export const SignIn = () => {
 					<Text style={styles.subtitle}>
 						Crie grupos para jogar seus games {`\n`} favoritos com seus amigos
 					</Text>
-					<ButtonIcon title='Entrar com Discord' onPress={handleSignIn} />
+					{loading ? (
+						<ActivityIndicator color={theme.colors.primary} />
+					) : (
+						<ButtonIcon title='Entrar com Discord' onPress={handleSignIn} />
+					)}
 				</View>
 			</View>
 		</Background>
