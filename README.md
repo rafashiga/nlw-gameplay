@@ -24,6 +24,6 @@
 
 ## :space_invader: Technologies
 
-- React Native
-- Expo
+- [React Native](https://reactnative.dev/)
+- [Expo](https://expo.io/)
 - Typescript
