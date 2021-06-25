@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useRoute } from '@react-navigation/native';
-import { View, ImageBackground, Text, FlatList, Alert } from 'react-native';
+import {
+	View,
+	ImageBackground,
+	Text,
+	FlatList,
+	Alert,
+	Share,
+} from 'react-native';
 import { Fontisto } from '@expo/vector-icons';
 import { BorderlessButton } from 'react-native-gesture-handler';
 
@@ -20,6 +27,7 @@ import { api } from '../../services/api';
 import BannerImg from '../../assets/banner.png';
 import { theme } from '../../global/styles/theme';
 import { styles } from './styles';
+import { Platform } from 'react-native';
 
 interface IParams {
 	appointmentSelected: IAppointment;
@@ -55,6 +63,18 @@ export const AppointmentDetails = () => {
 		}
 	};
 
+	const handleShareInvitation = () => {
+		const message =
+			Platform.OS === 'ios'
+				? `Junte-se a ${appointmentSelected.guild.name}`
+				: widget.instant_invite;
+
+		Share.share({
+			message,
+			url: widget.instant_invite,
+		});
+	};
+
 	useEffect(() => {
 		getGuildWidget();
 	}, []);
@@ -64,24 +84,33 @@ export const AppointmentDetails = () => {
 			<Header
 				title='Detalhes'
 				action={
-					<BorderlessButton>
-						<Fontisto name='share' size={24} color={theme.colors.primary} />
-					</BorderlessButton>
+					widget.instant_invite && (
+						<BorderlessButton>
+							<Fontisto
+								name='share'
+								size={24}
+								color={theme.colors.primary}
+								onPress={handleShareInvitation}
+							/>
+						</BorderlessButton>
+					)
 				}
 			/>
+
 			<ImageBackground source={BannerImg} style={styles.banner}>
 				<View style={styles.bannerContent}>
 					<Text style={styles.title}>{appointmentSelected.guild.name}</Text>
 					<Text style={styles.subtitle}>{appointmentSelected.description}</Text>
 				</View>
 			</ImageBackground>
+
 			{loading ? (
 				<Loading />
 			) : (
 				<>
 					<ListHeader
 						title='Jogadores'
-						subtitle={`Total ${widget.members.length}`}
+						subtitle={`Total ${widget.members?.length ?? 0}`}
 					/>
 					<FlatList
 						data={widget.members}
