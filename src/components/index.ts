@@ -11,6 +11,7 @@ export * from './GuildIcon';
 export * from './Header';
 export * from './ListDivider';
 export * from './ListHeader';
+export * from './Loading';
 export * from './ModalView';
 export * from './Member';
 export * from './Profile';

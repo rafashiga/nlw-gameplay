@@ -1,11 +1,24 @@
 import React from 'react';
-import { Image } from 'react-native';
+import { Image, View } from 'react-native';
 
+import DiscordSvg from '../../assets/discord.svg';
 import { styles } from './styles';
 
-export const GuildIcon = () => {
-	const uri =
-		'https://s2.glbimg.com/ztYuyapZXTARyNT5vw_b9lnhArs=/0x0:1200x675/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_08fbf48bc0524877943fe86e43087e7a/internal_photos/bs/2020/j/U/iLO5YCRBmGHUsDwBIBHA/valorant-closed-beta-1200x675.png';
+interface GuildIconProps {
+	guildId: string;
+	iconId: string | null;
+}
 
-	return <Image source={{ uri }} style={styles.image} resizeMode='cover' />;
+export const GuildIcon = ({ guildId, iconId }: GuildIconProps) => {
+	const uri = `${process.env.CDN_IMAGE}/icons/${guildId}/${iconId}.png`;
+
+	return (
+		<View style={styles.container}>
+			{iconId ? (
+				<Image source={{ uri }} style={styles.image} resizeMode='cover' />
+			) : (
+				<DiscordSvg width={40} height={40} />
+			)}
+		</View>
+	);
 };

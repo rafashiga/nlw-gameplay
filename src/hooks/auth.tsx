@@ -82,7 +82,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
 		if (storage) {
 			const userLogged = JSON.parse(storage);
-			api.defaults.headers.authorization = `Bearer ${userLogged.access_token}`;
+			api.defaults.headers.authorization = `Bearer ${userLogged.token}`;
 
 			setUser(userLogged);
 		}
