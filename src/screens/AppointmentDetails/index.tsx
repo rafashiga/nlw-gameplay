@@ -1,5 +1,6 @@
-import React from 'react';
-import { View, ImageBackground, Text, FlatList } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { useRoute } from '@react-navigation/native';
+import { View, ImageBackground, Text, FlatList, Alert } from 'react-native';
 import { Fontisto } from '@expo/vector-icons';
 import { BorderlessButton } from 'react-native-gesture-handler';
 
@@ -10,29 +11,53 @@ import {
 	ListHeader,
 	ListDivider,
 	Member,
+	IAppointment,
+	IMember,
+	Loading,
 } from '../../components';
+import { api } from '../../services/api';
 
 import BannerImg from '../../assets/banner.png';
 import { theme } from '../../global/styles/theme';
 import { styles } from './styles';
 
+interface IParams {
+	appointmentSelected: IAppointment;
+}
+
+interface IGuildWidget {
+	id: string;
+	name: string;
+	instant_invite: string;
+	members: IMember[];
+}
+
 export const AppointmentDetails = () => {
-	const members = [
-		{
-			id: '1',
-			username: 'Rafael',
-			avatar_url:
-				'https://images.unsplash.com/profile-1608037205070-e47e53995a43image?dpr=1&auto=format&fit=crop&w=150&h=150&q=60&crop=faces&bg=fff',
-			status: 'online',
-		},
-		{
-			id: '2',
-			username: 'Rafael',
-			avatar_url:
-				'https://images.unsplash.com/profile-1608037205070-e47e53995a43image?dpr=1&auto=format&fit=crop&w=150&h=150&q=60&crop=faces&bg=fff',
-			status: 'offline',
-		},
-	];
+	const [widget, setWidget] = useState<IGuildWidget>({} as IGuildWidget);
+	const [loading, setLoading] = useState(true);
+	const route = useRoute();
+	const { appointmentSelected } = route.params as IParams;
+
+	const getGuildWidget = async () => {
+		try {
+			const response = await api.get(
+				`/guilds/${appointmentSelected.guild.id}/widget.json`
+			);
+
+			setWidget(response.data);
+			setLoading(false);
+		} catch (error) {
+			Alert.alert(
+				'Verifique as configurações do servidor: Será que o Widget está habilitado?'
+			);
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	useEffect(() => {
+		getGuildWidget();
+	}, []);
 
 	return (
 		<Background>
@@ -46,20 +71,28 @@ export const AppointmentDetails = () => {
 			/>
 			<ImageBackground source={BannerImg} style={styles.banner}>
 				<View style={styles.bannerContent}>
-					<Text style={styles.title}>Lendários</Text>
-					<Text style={styles.subtitle}>
-						É hoje que vamos chegar ao challenger sem perder uma partida da md10
-					</Text>
+					<Text style={styles.title}>{appointmentSelected.guild.name}</Text>
+					<Text style={styles.subtitle}>{appointmentSelected.description}</Text>
 				</View>
 			</ImageBackground>
-			<ListHeader title='Jogadores' subtitle='total 3'></ListHeader>
-			<FlatList
-				data={members}
-				keyExtractor={(item) => item.id}
-				ItemSeparatorComponent={() => <ListDivider isCentered />}
-				renderItem={({ item }) => <Member data={item} />}
-				style={styles.members}
-			/>
+			{loading ? (
+				<Loading />
+			) : (
+				<>
+					<ListHeader
+						title='Jogadores'
+						subtitle={`Total ${widget.members.length}`}
+					/>
+					<FlatList
+						data={widget.members}
+						keyExtractor={(item) => item.id}
+						ItemSeparatorComponent={() => <ListDivider isCentered />}
+						renderItem={({ item }) => <Member data={item} />}
+						style={styles.members}
+					/>
+				</>
+			)}
+
 			<View style={styles.footer}>
 				<ButtonIcon title='Entrar na partida' />
 			</View>

@@ -29,8 +29,10 @@ export const Home = () => {
 		categoryId === category ? setCategory('') : setCategory(categoryId);
 	};
 
-	const handleAppointmentDetails = () => {
-		navigation.navigate('AppointmentDetails');
+	const handleAppointmentDetails = (appointmentSelected: IAppointment) => {
+		navigation.navigate('AppointmentDetails', {
+			appointmentSelected,
+		});
 	};
 
 	const handleAppointmentCreate = () => {
@@ -81,7 +83,10 @@ export const Home = () => {
 						data={appointments}
 						keyExtractor={(item) => item.id}
 						renderItem={({ item }) => (
-							<Appointment data={item} onPress={handleAppointmentDetails} />
+							<Appointment
+								data={item}
+								onPress={() => handleAppointmentDetails(item)}
+							/>
 						)}
 						ItemSeparatorComponent={() => <ListDivider />}
 						contentContainerStyle={{ paddingBottom: 69 }}
