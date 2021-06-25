@@ -23,7 +23,7 @@ interface AuthContextData {
 	user: IUser;
 	loading: boolean;
 	signIn: () => Promise<void>;
-	signOut: () => Promise<void>;
+	signOut: () => void;
 }
 
 export const AuthContext = createContext({} as AuthContextData);
