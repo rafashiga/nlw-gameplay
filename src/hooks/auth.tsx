@@ -23,6 +23,7 @@ interface AuthContextData {
 	user: IUser;
 	loading: boolean;
 	signIn: () => Promise<void>;
+	signOut: () => Promise<void>;
 }
 
 export const AuthContext = createContext({} as AuthContextData);
@@ -77,6 +78,11 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 		}
 	};
 
+	const signOut = () => {
+		setUser({} as IUser);
+		AsyncStorage.removeItem(COLLECTION_USERS);
+	};
+
 	const loadUserStorageData = async () => {
 		const storage = await AsyncStorage.getItem(COLLECTION_USERS);
 
@@ -93,7 +99,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 	}, []);
 
 	return (
-		<AuthContext.Provider value={{ user, loading, signIn }}>
+		<AuthContext.Provider value={{ user, loading, signIn, signOut }}>
 			{children}
 		</AuthContext.Provider>
 	);
